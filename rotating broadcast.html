@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        section {
+            width: 400px;
+            height: 300px;
+            border: 3px solid #000;
+            margin: 100px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        div {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        div img {
+            width: 400px;
+            height: 300px;
+            position: absolute;
+        }
+
+    </style>
+</head>
+<body>
+<section>
+    <div>
+        <img src="img/2.jpg">
+        <img src="img/1.jpg" class="img2">
+    </div>
+</section>
+<script>
+    var div = document.querySelector("div");
+    var img = div.getElementsByTagName("img");
+    var num = 1;
+    div.onOff = true;
+    document.onkeydown = function(ev){
+        switch(ev.keyCode){
+            case 37 :
+                    if(div.onOff){
+                        num--;
+                        move(-400,"left");
+                    }
+                break;
+            case 38 :
+                    if(div.onOff){
+                        num--;
+                        move(-300,"top");
+                    }
+                break;
+            case 39 :
+                    if(div.onOff){
+                        num++;
+                        move(400,"left")
+                    }
+                break;
+            case 40 :
+                    if(div.onOff){
+                        num++;
+                        move(300,"top");
+                    }
+                break;
+        }
+        function move(end,attr){
+            div.onOff = false;
+            img[0].style.left = img[1].style.left = 0;
+            img[0].style.top = img[1].style.top = 0;
+
+            if(num>7)num=1;
+            if(num<1)num=7;
+
+            img[1].src = "img/"+num+".jpg";
+            img[1].style[attr] = end + "px";
+
+            div.style.transition = ".3s";
+            div.style[attr] = -end + "px";
+            setTimeout(function(){
+                div.style.transition = "none";
+                img[0].src = "img/"+num+".jpg";
+                div.style[attr] = 0;
+                div.onOff = true;
+            },300);
+        }
+    }
+</script>
+</body>
+</html>
